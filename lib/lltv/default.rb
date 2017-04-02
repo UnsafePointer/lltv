@@ -13,11 +13,11 @@ module LLTV
     end
 
     def self.file_length
-      4
+      5
     end
 
     def self.fps
-      8
+      5
     end
 
     def self.quality
