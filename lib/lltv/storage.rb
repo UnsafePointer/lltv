@@ -1,3 +1,5 @@
+require 'yaml'
+
 module LLTV
   class Storage
     attr_reader :path
@@ -7,8 +9,12 @@ module LLTV
     end
 
     def continue_info
-      continue_info = File.read(path) if File.exist? path
-      continue_info ||= { 'time' => 0, 'part' => 1 }
+      continue_info = YAML.load_file(path) if File.exist? path
+      continue_info ||= { 'seektime' => 0, 'part' => 1 }
+    end
+
+    def store(continue_info)
+      File.write(path, continue_info.to_yaml)
     end
   end
 end
