@@ -13,15 +13,27 @@ module LLTV
     end
 
     def self.file_length
-      5
+      4
     end
 
     def self.fps
       12
     end
 
+    def self.quality
+      1
+    end
+
+    def self.resolution
+      '380x218'
+    end
+
     def self.workspace_path
       'workspace'
+    end
+
+    def self.authorization_file_path
+      "#{Dir.home}/.lltv_authorization"
     end
   end
 end

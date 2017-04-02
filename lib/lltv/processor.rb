@@ -26,7 +26,7 @@ module LLTV
       (0..total_steps).each do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
         begin
-          movie.screenshot(file_name, seek_time: iter, quality: 1)
+          movie.screenshot(file_name, { seek_time: iter, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
           iter += step.to_f
           image_list << Magick::Image.read(File.new(file_name)).first
         rescue

@@ -3,6 +3,7 @@ require 'lltv/default'
 require 'lltv/storage'
 require 'lltv/processor'
 require 'lltv/logger'
+require 'lltv/bot'
 require 'fileutils'
 
 module LLTV
@@ -48,6 +49,8 @@ module LLTV
         else
           seektime += Default.file_length
         end
+        bot = Bot.new()
+        bot.post
         Logger.log("Storing continue info with seektime: #{seektime} at part: #{part}")
         storage.store({'seektime' => seektime, 'part' => part})
       end
