@@ -27,8 +27,13 @@ module LLTV
     def run
       Workspace.change_directory do
         image_list = Magick::ImageList.new
+        lenght = Default.file_length
+        fps = Default.fps
+        delay = lenght.to_f / fps.to_f
         Dir['*'].reject { |file| file.start_with?('.') }.each do |file_name|
-          image_list << Magick::Image.read(File.new(file_name)).first
+          image = Magick::Image.read(File.new(file_name)).first
+          image.delay = delay
+          image_list << image
         end
         image_list.write(Default.file_name)
       end
