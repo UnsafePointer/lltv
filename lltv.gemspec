@@ -24,4 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
 
   spec.add_runtime_dependency 'claide', '~> 1.0.0'
+  spec.add_runtime_dependency 'streamio-ffmpeg', '~> 3.0.2'
+  spec.add_runtime_dependency 'rmagick', '~> 2.16.0'
 end
