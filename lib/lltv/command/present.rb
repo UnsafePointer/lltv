@@ -5,6 +5,7 @@ require 'lltv/processor'
 require 'lltv/logger'
 require 'lltv/bot'
 require 'fileutils'
+require 'tmpdir'
 
 module LLTV
   class Present < Command
