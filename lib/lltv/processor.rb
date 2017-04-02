@@ -1,5 +1,4 @@
 require 'streamio-ffmpeg'
-require 'rmagick'
 require 'lltv/default'
 
 module LLTV
@@ -22,17 +21,15 @@ module LLTV
       step = 1.to_f / frames_per_second
       total_steps = frames_per_second * total_lenght_in_seconds
       iter = seektime.to_f
-      image_list = Magick::ImageList.new
       (0..total_steps).each do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
         begin
           movie.screenshot(file_name, { seek_time: iter, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
           iter += step.to_f
-          image_list << Magick::Image.read(File.new(file_name)).first
+
         rescue
         end
       end
-      image_list.write(Default.file_name)
       should_process_next_file
     end
   end

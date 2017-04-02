@@ -3,7 +3,9 @@ require 'lltv/version'
 
 module LLTV
   class Command < CLAide::Command
-    require 'lltv/command/present'
+    require 'lltv/command/frames'
+    require 'lltv/command/generate'
+    require 'lltv/command/upload'
 
     self.abstract_command = true
     self.command = 'lltv'
