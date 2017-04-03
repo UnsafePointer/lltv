@@ -18,15 +18,14 @@ module LLTV
         total_lenght_in_seconds = remaining
         should_process_next_file = true
       end
-      step = 1.to_f / frames_per_second
-      total_steps = frames_per_second * total_lenght_in_seconds
+      total_frames = frames_per_second.to_f * total_lenght_in_seconds.to_f
+      step = total_lenght_in_seconds.to_f / total_frames
       iter = seektime.to_f
-      (0..total_steps).each do |step_number|
+      (0..total_frames).each do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
         begin
           movie.screenshot(file_name, { seek_time: iter, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
           iter += step.to_f
-
         rescue
         end
       end

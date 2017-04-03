@@ -39,6 +39,7 @@ module LLTV
         else
           seektime += Default.file_length
         end
+        Logger.log("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: false")
         storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => false})
       end
     end
