@@ -1,6 +1,6 @@
 module LLTV
-  class Logger
-    def self.log(message)
+  class Output
+    def self.out(message)
       puts "[lltv] #{message}"
     end
   end

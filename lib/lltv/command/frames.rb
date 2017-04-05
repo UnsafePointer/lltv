@@ -2,7 +2,7 @@ require 'lltv/command'
 require 'lltv/default'
 require 'lltv/storage'
 require 'lltv/processor'
-require 'lltv/logger'
+require 'lltv/output'
 require 'lltv/workspace'
 require 'fileutils'
 require 'tmpdir'
@@ -34,14 +34,14 @@ class Frames < Command
     def run
       FileUtils.rm_rf(Default.workspace_path)
       Workspace.change_directory do
-        Logger.log("Storage opened at #{Default.store_path}")
+        Output.out("Storage opened at #{Default.store_path}")
         storage = Storage.new(Default.store_path)
         continue_info = storage.continue_info
         seektime = continue_info['seektime']
         part = continue_info['part']
         processor = Processor.new(@sources_path)
         should_process_next_file = processor.process(seektime, part)
-        Logger.log("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: #{should_process_next_file}")
+        Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: #{should_process_next_file}")
         storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => should_process_next_file})
       end
     end

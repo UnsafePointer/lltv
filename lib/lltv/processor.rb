@@ -1,5 +1,6 @@
 require 'streamio-ffmpeg'
 require 'lltv/default'
+require 'logger'
 
 module LLTV
   class Processor

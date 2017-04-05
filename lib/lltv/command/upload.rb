@@ -1,6 +1,7 @@
 require 'lltv/workspace'
 require 'lltv/default'
 require 'lltv/bot'
+require 'lltv/output'
 
 module LLTV
   class Upload < Command
@@ -26,7 +27,7 @@ module LLTV
 
     def run
       Workspace.change_directory do
-        Logger.log("Storage opened at #{Default.store_path}")
+        Output.out("Storage opened at #{Default.store_path}")
         storage = Storage.new(Default.store_path)
         continue_info = storage.continue_info
         seektime = continue_info['seektime']
@@ -39,7 +40,7 @@ module LLTV
         else
           seektime += Default.file_length
         end
-        Logger.log("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: false")
+        Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: false")
         storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => false})
       end
     end
