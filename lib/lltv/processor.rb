@@ -1,12 +1,17 @@
 require 'streamio-ffmpeg'
 require 'lltv/default'
 require 'logger'
+require 'fileutils'
 
 module LLTV
   class Processor
     attr_reader :sources_path
     def initialize(sources_path)
       @sources_path = sources_path
+      filepath = Default.ffmpeg_log_path
+      FileUtils.touch(filepath) unless File.exist? filepath
+      logger = Logger.new(File.new(filepath, 'w'))
+      FFMPEG.logger=(logger)
     end
 
     def process(seektime, part)

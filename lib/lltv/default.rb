@@ -35,5 +35,9 @@ module LLTV
     def self.authorization_file_path
       "#{Dir.home}/.lltv_authorization"
     end
+
+    def self.ffmpeg_log_path
+      '/var/log/lltv_ffmpeg.log'
+    end
   end
 end
