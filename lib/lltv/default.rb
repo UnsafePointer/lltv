@@ -17,7 +17,7 @@ module LLTV
     end
 
     def self.fps
-      5
+      10
     end
 
     def self.quality
@@ -25,7 +25,7 @@ module LLTV
     end
 
     def self.resolution
-      '460x264'
+      '320x200'
     end
 
     def self.workspace_path

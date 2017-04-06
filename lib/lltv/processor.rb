@@ -14,7 +14,7 @@ module LLTV
 
     def process(seektime, part)
       should_process_next_file = false
-      movie = FFMPEG::Movie.new(sources_path + "part_#{part}.m4v")
+      movie = FFMPEG::Movie.new(sources_path + "part_#{part}.mp4")
       frames_per_second = Default.fps.to_f
       total_lenght_in_seconds = Default.file_length
       remaining = movie.duration - seektime
