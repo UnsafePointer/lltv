@@ -13,6 +13,7 @@ module LLTV
     def self.options
       [
         ['--length=n', "Split the file in parts of `n` seconds length each, as much as possible. Default is 10"],
+        ['--start=i', "Processing will start at part `i`. Default is 0"],
       ].concat(super)
     end
 
@@ -25,6 +26,7 @@ module LLTV
       @length = argv.option('length')
       @length ||= Default.part_length
       @length = @length.to_i
+      @start = argv.option('start').to_i
       super
     end
 
@@ -37,7 +39,7 @@ module LLTV
     def run
       FileUtils.rm_rf(Default.workspace_path)
       Workspace.change_directory do
-        splitter = Splitter.new(@file_path, @length)
+        splitter = Splitter.new(@file_path, @length, @start)
         splitter.split
       end
     end
