@@ -10,7 +10,7 @@ module LLTV
 
     def continue_info
       continue_info = YAML.load_file(path) if File.exist? path
-      continue_info ||= { 'seektime' => 0, 'part' => 1, 'should_process_next_file' => false }
+      continue_info ||= { 'seektime' => 0, 'part' => 0, 'should_process_next_file' => false }
     end
 
     def store(continue_info)
