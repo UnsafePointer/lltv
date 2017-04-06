@@ -14,10 +14,10 @@ module LLTV
       Output.out("Splitter started with file_path: #{file_path}, length: #{length}")
       movie = FFMPEG::Movie.new(file_path)
       parts = (movie.duration / length).to_i
+      parts += 1 if parts * length < movie.duration
       parts.times do |i|
         ss = i * length
-        t = (i + 1) * length
-        movie.transcode("part_#{i}.mp4", %W(-ss #{format(ss)} -t #{format(t)} -async 1 -c copy))
+        movie.transcode("part_#{i}.mp4", %W(-ss #{format(ss)} -t #{format(length)}))
       end
     end
 
