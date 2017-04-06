@@ -1,6 +1,7 @@
 require 'lltv/workspace'
 require 'lltv/default'
 require 'rmagick'
+require 'fileutils'
 
 module LLTV
   class Generate < Command
@@ -26,6 +27,7 @@ module LLTV
 
     def run
       Workspace.change_directory do
+        FileUtils.rm_rf(Default.file_name)
         image_list = Magick::ImageList.new
         length = Default.file_length
         fps = Default.fps

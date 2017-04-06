@@ -17,7 +17,7 @@ module LLTV
     end
 
     def self.fps
-      10
+      8
     end
 
     def self.quality
