@@ -7,9 +7,9 @@ require 'fileutils'
 module LLTV
   class Processor
     attr_reader :sources_path
-    def initialize(sources_path)
+    def initialize(sources_path, verbose)
       @sources_path = sources_path
-      Settings.setup_ffmpeg_logger()
+      Settings.setup_ffmpeg_logger() unless verbose
     end
 
     def process(seektime, part)
@@ -27,11 +27,14 @@ module LLTV
       iter = seektime.to_f
       (0..total_frames).each do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
+        current_time = Time.now
         begin
           movie.screenshot(file_name, { seek_time: iter, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
           iter += step.to_f
         rescue
         end
+        finish_time = Time.now
+        Output.out("Frame: #{file_name} composed in #{current_time - finish_time} seconds")
       end
       should_process_next_file
     end
