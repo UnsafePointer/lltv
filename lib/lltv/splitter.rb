@@ -23,7 +23,7 @@ module LLTV
         ss = part * length
         movie.transcode("part_#{part}.mp4", %W(-ss #{format(ss)} -t #{format(length)}))
         finish_time = Time.now
-        Output.out("File: part_#{part}.mp4 splitted in #{current_time - finish_time} seconds")
+        Output.out("File: part_#{part}.mp4 splitted in #{finish_time - current_time} seconds")
       end
     end
 

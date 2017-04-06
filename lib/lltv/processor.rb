@@ -34,7 +34,7 @@ module LLTV
         rescue
         end
         finish_time = Time.now
-        Output.out("Frame: #{file_name} composed in #{current_time - finish_time} seconds")
+        Output.out("Frame: #{file_name} composed in #{finish_time - current_time} seconds")
       end
       should_process_next_file
     end
