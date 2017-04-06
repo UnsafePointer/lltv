@@ -6,6 +6,7 @@ module LLTV
     require 'lltv/command/frames'
     require 'lltv/command/generate'
     require 'lltv/command/upload'
+    require 'lltv/command/split'
 
     self.abstract_command = true
     self.command = 'lltv'

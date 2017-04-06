@@ -39,5 +39,9 @@ module LLTV
     def self.ffmpeg_log_path
       '/var/log/lltv_ffmpeg.log'
     end
+
+    def self.part_length
+      120
+    end
   end
 end

@@ -8,7 +8,7 @@ require 'fileutils'
 require 'tmpdir'
 
 module LLTV
-class Frames < Command
+  class Frames < Command
     self.arguments = [
     ]
 
