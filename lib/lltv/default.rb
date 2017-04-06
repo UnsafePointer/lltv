@@ -13,7 +13,7 @@ module LLTV
     end
 
     def self.file_length
-      5
+      3
     end
 
     def self.fps
@@ -25,7 +25,7 @@ module LLTV
     end
 
     def self.resolution
-      '320x200'
+      '460x264'
     end
 
     def self.workspace_path
