@@ -18,7 +18,7 @@ module LLTV
       frames_per_second = Default.fps.to_f
       total_lenght_in_seconds = Default.file_length
       remaining = movie.duration - seektime
-      if remaining < total_lenght_in_seconds
+      if remaining.round(1) <= total_lenght_in_seconds
         total_lenght_in_seconds = remaining
         should_process_next_file = true
       end
