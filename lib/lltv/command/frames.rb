@@ -15,6 +15,7 @@ module LLTV
     def self.options
       [
         ['--sources-path=/path/to/sources', "If not set, lltv will assume #{Default.sources_path}"],
+        ['--random', "If set, lltv will ignore stored information and select a random scene"],
       ].concat(super)
     end
 
@@ -24,6 +25,7 @@ module LLTV
 
     def initialize(argv)
       @sources_path = argv.option('sources-path') || Default.sources_path
+      @random = argv.flag?('random')
       super
     end
 
@@ -34,15 +36,19 @@ module LLTV
     def run
       FileUtils.rm_rf(Default.workspace_path)
       Workspace.change_directory do
-        Output.out("Storage opened at #{Default.store_path}")
-        storage = Storage.new(Default.store_path)
-        continue_info = storage.continue_info
-        seektime = continue_info['seektime']
-        part = continue_info['part']
         processor = Processor.new(@sources_path, @verbose)
-        should_process_next_file = processor.process(seektime, part)
-        Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: #{should_process_next_file}")
-        storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => should_process_next_file})
+        unless @random
+          Output.out("Storage opened at #{Default.store_path}")
+          storage = Storage.new(Default.store_path)
+          continue_info = storage.continue_info
+          seektime = continue_info['seektime']
+          part = continue_info['part']
+          should_process_next_file = processor.process(seektime, part)
+          Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: #{should_process_next_file}")
+          storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => should_process_next_file})
+        else
+          processor.process_random()
+        end
       end
     end
 

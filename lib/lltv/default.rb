@@ -43,5 +43,9 @@ module LLTV
     def self.part_length
       120
     end
+
+    def self.total_parts
+      266
+    end
   end
 end

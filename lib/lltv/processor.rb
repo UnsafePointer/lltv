@@ -22,6 +22,21 @@ module LLTV
         total_lenght_in_seconds = remaining
         should_process_next_file = true
       end
+      work(frames_per_second, total_lenght_in_seconds, seektime, movie)
+      should_process_next_file
+    end
+
+    def process_random()
+      part = rand(Default.total_parts + 1)
+      movie = FFMPEG::Movie.new(sources_path + "part_#{part}.mp4")
+      seektime = rand(movie.duration.to_i - 3)
+      frames_per_second = Default.fps.to_f
+      total_lenght_in_seconds = Default.file_length
+      work(frames_per_second, total_lenght_in_seconds, seektime, movie)
+    end
+
+    private
+    def work(frames_per_second, total_lenght_in_seconds, seektime, movie)
       total_frames = frames_per_second.to_f * total_lenght_in_seconds.to_f
       step = total_lenght_in_seconds.to_f / total_frames
       iter = seektime.to_f
@@ -36,7 +51,6 @@ module LLTV
         finish_time = Time.now
         Output.out("Frame: #{file_name} composed in #{finish_time - current_time} seconds")
       end
-      should_process_next_file
     end
   end
 end
