@@ -7,9 +7,10 @@ require 'parallel'
 
 module LLTV
   class Processor
-    attr_reader :sources_path
-    def initialize(sources_path, verbose)
+    attr_reader :sources_path, :parallel
+    def initialize(sources_path, parallel, verbose)
       @sources_path = sources_path
+      @parallel = parallel
       Settings.setup_ffmpeg_logger() unless verbose
     end
 
@@ -42,7 +43,7 @@ module LLTV
       step = total_lenght_in_seconds.to_f / total_frames
       iter = seektime.to_f
       current_time_exec = Time.now
-      Parallel.each(Array(0..total_frames)) do |step_number|
+      work = lambda do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
         current_time = Time.now
         begin
@@ -52,6 +53,12 @@ module LLTV
         end
         finish_time = Time.now
         Output.out("Frame: #{file_name} composed in #{finish_time - current_time} seconds")
+      end
+      steps = Array(0..total_frames)
+      if parallel
+        Parallel.each(steps, &work)
+      else
+        steps.each(&work)
       end
       Output.out("Total execution time: #{Time.now - current_time_exec} seconds")
     end

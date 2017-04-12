@@ -16,6 +16,7 @@ module LLTV
       [
         ['--sources-path=/path/to/sources', "If not set, lltv will assume #{Default.sources_path}"],
         ['--random', "If set, lltv will ignore stored information and select a random scene"],
+        ['--parallel', "If set, lltv will parallelize the frames processing"],
       ].concat(super)
     end
 
@@ -26,6 +27,7 @@ module LLTV
     def initialize(argv)
       @sources_path = argv.option('sources-path') || Default.sources_path
       @random = argv.flag?('random')
+      @parallel = argv.flag?('parallel')
       super
     end
 
@@ -36,7 +38,7 @@ module LLTV
     def run
       FileUtils.rm_rf(Default.workspace_path)
       Workspace.change_directory do
-        processor = Processor.new(@sources_path, @verbose)
+        processor = Processor.new(@sources_path, @parallel, @verbose)
         unless @random
           Output.out("Storage opened at #{Default.store_path}")
           storage = Storage.new(Default.store_path)
