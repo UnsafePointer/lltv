@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'streamio-ffmpeg', '~> 3.0.2'
   spec.add_runtime_dependency 'rmagick', '~> 2.16.0'
   spec.add_runtime_dependency 'twitter', '~> 6.1.0'
+  spec.add_runtime_dependency 'parallel', '~> 1.11.1'
 end

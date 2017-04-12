@@ -3,6 +3,7 @@ require 'lltv/default'
 require 'lltv/settings'
 require 'logger'
 require 'fileutils'
+require 'parallel'
 
 module LLTV
   class Processor
@@ -40,7 +41,8 @@ module LLTV
       total_frames = frames_per_second.to_f * total_lenght_in_seconds.to_f
       step = total_lenght_in_seconds.to_f / total_frames
       iter = seektime.to_f
-      (0..total_frames).each do |step_number|
+      current_time_exec = Time.now
+      Parallel.each(Array(0..total_frames)) do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
         current_time = Time.now
         begin
@@ -51,6 +53,7 @@ module LLTV
         finish_time = Time.now
         Output.out("Frame: #{file_name} composed in #{finish_time - current_time} seconds")
       end
+      Output.out("Total execution time: #{Time.now - current_time_exec} seconds")
     end
   end
 end
