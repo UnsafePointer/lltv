@@ -41,14 +41,13 @@ module LLTV
     def work(frames_per_second, total_lenght_in_seconds, seektime, movie)
       total_frames = frames_per_second.to_f * total_lenght_in_seconds.to_f
       step = total_lenght_in_seconds.to_f / total_frames
-      iter = seektime.to_f
       current_time_exec = Time.now
       work = lambda do |step_number|
         file_name = 'screenshot_%.2d.jpeg' % step_number
+        seek_for_step = seektime.to_f + step_number * step.to_f
         current_time = Time.now
         begin
-          movie.screenshot(file_name, { seek_time: iter, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
-          iter += step.to_f
+          movie.screenshot(file_name, { seek_time: seek_for_step, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
         rescue
         end
         finish_time = Time.now
