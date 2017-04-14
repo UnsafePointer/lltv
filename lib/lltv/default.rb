@@ -47,5 +47,13 @@ module LLTV
     def self.total_parts
       266
     end
+
+    def self.number_of_colors
+      256
+    end
+
+    def self.histogram_bucket_size
+      4
+    end
   end
 end
