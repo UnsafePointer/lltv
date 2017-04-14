@@ -63,6 +63,9 @@ module LLTV
           last_image_q = q_2
         end
         image_list << last_image
+        last_image = nil
+        last_image_q = nil
+        last_image_histogram = nil
         image_list.write(Default.file_name)
       end
     end
