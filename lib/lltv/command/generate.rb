@@ -60,6 +60,7 @@ module LLTV
           last_image = image_2
           last_image_q = q_2
         end
+        delay_param = "%.2f" % delay
         `convert -delay #{delay} -loop 0 screenshot_*.jpeg love_live.gif`
       end
     end
