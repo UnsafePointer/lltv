@@ -36,7 +36,20 @@ module LLTV
         delay = length.to_f / total_frames.to_f
         last_image = nil
         last_image_histogram = {}
-        Dir['*'].reject { |file| file.start_with?('.') }.sort.each_cons(2) do |file_name_1, file_name_2|
+        skipping_end_of_file = false
+        skipping_beginning_of_file = false
+        Dir['*'].reject { |file| file.start_with?('.') }.sort.each_cons(2).to_a.each_with_index do |(file_name_1, file_name_2), i|
+          if skipping_beginning_of_file
+            i.times do |time|
+              FileUtils.rm_rf("screenshot_%.2d.jpeg" % time)
+            end
+            skipping_beginning_of_file = false
+          end
+          if skipping_end_of_file
+            FileUtils.rm_rf(file_name_1)
+            FileUtils.rm_rf(file_name_2)
+            next
+          end
           image_1 = last_image
           image_1 ||= generate_image(file_name_1, delay)
           image_2 = generate_image(file_name_2, delay)
@@ -54,6 +67,15 @@ module LLTV
           Output.out("Comparison result between #{file_name_1} and #{file_name_2}: #{result}")
           image_1.delay = delay
           last_image = image_2
+          remaining_frames = total_frames.to_i - i
+          should_skip_frames_end_of_file = remaining_frames <= Default.remaining_frames_skip
+          should_skip_frames_beginning_of_file = remaining_frames >= total_frames - Default.remaining_frames_skip
+          if result > 1 && (should_skip_frames_end_of_file || should_skip_frames_beginning_of_file)
+            Output.out("Skipping remaining frames: #{remaining_frames}") if should_skip_frames_end_of_file
+            Output.out("Skipping beginning frames: #{i + 1}") if should_skip_frames_beginning_of_file
+            skipping_end_of_file = true if should_skip_frames_end_of_file
+            skipping_beginning_of_file = true if should_skip_frames_beginning_of_file
+          end
         end
         delay_param = "%.2f" % delay
         `convert -delay #{delay} -loop 0 screenshot_*.jpeg love_live.gif`

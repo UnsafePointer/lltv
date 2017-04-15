@@ -55,5 +55,9 @@ module LLTV
     def self.histogram_bucket_size
       4
     end
+
+    def self.remaining_frames_skip
+      5
+    end
   end
 end
