@@ -75,6 +75,7 @@ module LLTV
             Output.out("Skipping beginning frames: #{i + 1}") if should_skip_frames_beginning_of_file
             skipping_end_of_file = true if should_skip_frames_end_of_file
             skipping_beginning_of_file = true if should_skip_frames_beginning_of_file
+            FileUtils.rm_rf(file_name_2) if should_skip_frames_end_of_file
           end
         end
         delay_param = "%.2f" % delay
