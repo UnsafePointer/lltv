@@ -61,7 +61,7 @@ module LLTV
     end
 
     def self.scene_change_tolerance
-      1.to_f
+      0.5
     end
   end
 end
