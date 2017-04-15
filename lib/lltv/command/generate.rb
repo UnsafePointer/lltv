@@ -70,7 +70,7 @@ module LLTV
           remaining_frames = total_frames.to_i - i
           should_skip_frames_end_of_file = remaining_frames <= Default.remaining_frames_skip
           should_skip_frames_beginning_of_file = remaining_frames >= total_frames - Default.remaining_frames_skip
-          if result > 1 && (should_skip_frames_end_of_file || should_skip_frames_beginning_of_file)
+          if result > Default.scene_change_tolerance && (should_skip_frames_end_of_file || should_skip_frames_beginning_of_file)
             Output.out("Skipping remaining frames: #{remaining_frames}") if should_skip_frames_end_of_file
             Output.out("Skipping beginning frames: #{i + 1}") if should_skip_frames_beginning_of_file
             skipping_end_of_file = true if should_skip_frames_end_of_file

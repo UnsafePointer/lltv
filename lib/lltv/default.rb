@@ -59,5 +59,9 @@ module LLTV
     def self.remaining_frames_skip
       5
     end
+
+    def self.scene_change_tolerance
+      1.to_f
+    end
   end
 end
