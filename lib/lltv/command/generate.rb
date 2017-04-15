@@ -30,7 +30,6 @@ module LLTV
     def run
       Workspace.change_directory do
         FileUtils.rm_rf(Default.file_name)
-        image_list = Magick::ImageList.new
         length = Default.file_length
         fps = Default.fps
         total_frames = length.to_f * fps.to_f
@@ -58,15 +57,10 @@ module LLTV
           end
           Output.out("Comparison result between #{file_name_1} and #{file_name_2}: #{result}")
           image_1.delay = delay
-          image_list << image_1
           last_image = image_2
           last_image_q = q_2
         end
-        image_list << last_image
-        last_image = nil
-        last_image_q = nil
-        last_image_histogram = nil
-        image_list.write(Default.file_name)
+        `convert -delay #{delay} -loop 0 screenshot_*.jpeg love_live.gif`
       end
     end
 
