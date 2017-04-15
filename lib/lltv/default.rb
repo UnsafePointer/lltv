@@ -13,7 +13,7 @@ module LLTV
     end
 
     def self.file_length
-      3
+      2.5
     end
 
     def self.fps
