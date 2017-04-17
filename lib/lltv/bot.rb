@@ -17,7 +17,7 @@ module LLTV
         config.access_token = authorization['access_token']
         config.access_token_secret = authorization['access_token_secret']
       end
-      client.update_with_media('', File.new(Default.file_name))
+      client.update_with_media(Default.hashtags.join(' '), File.new(Default.file_name))
     end
   end
 end

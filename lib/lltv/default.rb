@@ -63,5 +63,17 @@ module LLTV
     def self.scene_change_tolerance
       0.5
     end
+
+    def self.hashtags
+      %w{
+        #ラブライブ
+        #lovelive
+        #lovelive_sunshine
+        #LLSIF
+        #スクフェス
+        #μs
+        #aqours
+        }
+    end
   end
 end
