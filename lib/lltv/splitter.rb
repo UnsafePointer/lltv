@@ -2,12 +2,13 @@ require 'lltv/output'
 
 module LLTV
   class Splitter
-    attr_reader :file_path, :length, :start
+    attr_reader :file_path, :length, :start, :mark
 
-    def initialize(file_path, length, start)
+    def initialize(file_path, length, start, mark = 0)
       @file_path = file_path
       @length = length
       @start = start
+      @mark = mark
       Settings.setup_ffmpeg_logger()
     end
 
@@ -21,9 +22,10 @@ module LLTV
         part = i + start
         current_time = Time.now
         ss = part * length
-        movie.transcode("part_#{part}.mp4", %W(-ss #{format(ss)} -t #{format(length)}))
+        part_name = part + mark
+        movie.transcode("part_%.3d.mp4" % part_name, %W(-ss #{format(ss)} -t #{format(length)}))
         finish_time = Time.now
-        Output.out("File: part_#{part}.mp4 splitted in #{finish_time - current_time} seconds")
+        Output.out("File: part_%.3d.mp4 splitted in #{finish_time - current_time} seconds" % part_name)
       end
     end
 
