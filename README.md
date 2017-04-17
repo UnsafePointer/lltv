@@ -2,21 +2,13 @@
 
 Love Live! Twitter bot inspired in @keion_tv
 
-## Installation
+## Deployment
 
-Add this line to your application's Gemfile:
+You can install this gem locally with
 
 ```ruby
-gem 'lltv'
+rake install:local
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install lltv
 
 ## Usage
 
@@ -28,8 +20,7 @@ $ lltv --help
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/lltv. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/Ruenzuo/lltv. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
