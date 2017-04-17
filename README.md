@@ -1,6 +1,6 @@
-# Lltv
+# [lltv](https://twitter.com/lltv_rb)
 
-Love Live! Twitter bot inspired in @keion_tv
+Love Live! Twitter bot inspired in [@keion_tv](https://twitter.com/keion_tv)
 
 ## Deployment
 
