@@ -24,8 +24,16 @@ module LLTV
       1
     end
 
+    def self.errored_quality
+      5
+    end
+
     def self.resolution
       '460x264'
+    end
+
+    def self.errored_resolution
+      '420x242'
     end
 
     def self.workspace_path

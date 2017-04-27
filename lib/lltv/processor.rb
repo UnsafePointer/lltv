@@ -14,7 +14,7 @@ module LLTV
       Settings.setup_ffmpeg_logger() unless verbose
     end
 
-    def process(seektime, part)
+    def process(seektime, part, errored)
       should_process_next_file = false
       movie = FFMPEG::Movie.new(sources_path + "part_#{part}.mp4")
       frames_per_second = Default.fps.to_f
@@ -24,7 +24,7 @@ module LLTV
         total_lenght_in_seconds = remaining
         should_process_next_file = true
       end
-      work(frames_per_second, total_lenght_in_seconds, seektime, movie)
+      work(frames_per_second, total_lenght_in_seconds, seektime, movie, errored)
       should_process_next_file
     end
 
@@ -38,7 +38,7 @@ module LLTV
     end
 
     private
-    def work(frames_per_second, total_lenght_in_seconds, seektime, movie)
+    def work(frames_per_second, total_lenght_in_seconds, seektime, movie, errored = false)
       total_frames = frames_per_second.to_f * total_lenght_in_seconds.to_f
       step = total_lenght_in_seconds.to_f / total_frames
       current_time_exec = Time.now
@@ -47,7 +47,9 @@ module LLTV
         seek_for_step = seektime.to_f + step_number * step.to_f
         current_time = Time.now
         begin
-          movie.screenshot(file_name, { seek_time: seek_for_step, resolution: Default.resolution, quality: Default.quality }, preserve_aspect_ratio: :width)
+          resolution = errored ? Default.errored_resolution : Default.resolution
+          quality = errored ? Default.errored_quality : Default.quality
+          movie.screenshot(file_name, { seek_time: seek_for_step, resolution: resolution, quality: quality}, preserve_aspect_ratio: :width)
         rescue
         end
         finish_time = Time.now

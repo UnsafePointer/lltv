@@ -45,7 +45,9 @@ module LLTV
           continue_info = storage.continue_info
           seektime = continue_info['seektime']
           part = continue_info['part']
-          should_process_next_file = processor.process(seektime, part)
+          errored = continue_info['errored']
+          errored ||= false
+          should_process_next_file = processor.process(seektime, part, errored)
           Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: #{should_process_next_file}")
           storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => should_process_next_file})
         else

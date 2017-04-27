@@ -33,15 +33,22 @@ module LLTV
         seektime = continue_info['seektime']
         part = continue_info['part']
         bot = Bot.new()
-        bot.post
-        if continue_info['should_process_next_file']
-          seektime = 0
-          part += 1
+        begin
+          bot.post
+        rescue Twitter::Error::Forbidden => e
+          Output.out("Errored: #{e}")
+          Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: false")
+          storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => false, 'errored' => true})
         else
-          seektime += Default.file_length
+          if continue_info['should_process_next_file']
+            seektime = 0
+            part += 1
+          else
+            seektime += Default.file_length
+          end
+          Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: false")
+          storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => false})
         end
-        Output.out("Storing continue info with seektime: #{seektime} at part: #{part} with should_process_next_file: false")
-        storage.store({'seektime' => seektime, 'part' => part, 'should_process_next_file' => false})
       end
     end
 
